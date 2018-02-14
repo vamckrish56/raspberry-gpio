@@ -3,6 +3,7 @@
 import sys
 import time
 import RPi.GPIO as GPIO
+import signal
 
 # Use BCM GPIO references
 # instead of physical pin numbers
@@ -18,6 +19,19 @@ for pin in StepPins:
     print "Setup pins"
     GPIO.setup(pin, GPIO.OUT)
     GPIO.output(pin, False)
+
+
+# Turn off all lights when user ends demo
+def allPinsOff(signal, frame):
+    for pin in StepPins:
+        print "Setup pins"
+        GPIO.setup(pin, GPIO.OUT)
+        GPIO.output(pin, False)
+        GPIO.cleanup()
+    sys.exit(0)
+
+
+signal.signal(signal.SIGINT, allLightsOff)
 
 # Define advanced sequence
 # as shown in manufacturers datasheet
