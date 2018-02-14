@@ -31,7 +31,7 @@ def allPinsOff(signal, frame):
     sys.exit(0)
 
 
-signal.signal(signal.SIGINT, allLightsOff)
+signal.signal(signal.SIGINT, allPinsOff)
 
 # Define advanced sequence
 # as shown in manufacturers datasheet
@@ -81,4 +81,4 @@ while True:
         StepCounter = StepCount + StepDir
 
     # Wait before moving on
-    time.sleep(100)
+    time.sleep(1)
