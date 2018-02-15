@@ -22,12 +22,12 @@ def allLightsOff(signal, frame):
 
 
 def lightsOff():
-    GPIO.output(9, False)
-    GPIO.output(10, False)
-    GPIO.output(11, False)
+    GPIO.output(9, False)   # RED
+    GPIO.output(10, False)  # YELLOW
+    GPIO.output(11, False)  # GREEN
     GPIO.output(16, False)  # GREEN
-    GPIO.output(20, False)
-    GPIO.output(21, False)
+    GPIO.output(20, False)  # RED
+    GPIO.output(21, False)  # YELLOW
 
 
 signal.signal(signal.SIGINT, allLightsOff)
