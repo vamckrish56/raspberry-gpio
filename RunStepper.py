@@ -1,4 +1,4 @@
-import Stepper
+from Stepper import Stepper
 import time
 
 # initialize GPIO17,GPIO22,GPI23,GPI24
