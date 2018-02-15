@@ -41,7 +41,7 @@ class Stepper:
         self.Seq = self.Seq2
         self.StepCount = self.StepCount2
 
-    def rotate_clockwise(self, steps):
+    def rotate_clockwise(self, steps, hold):
         StepCounter = 0
         while steps > 0:
             for pin in range(0, 4):
@@ -59,9 +59,10 @@ class Stepper:
 
             time.sleep(self.WaitTime)
             steps -= 1
-        self.reset_pins()
+        if hold != True:
+            self.reset_pins()
 
-    def rotate_counterwise(self, steps):
+    def rotate_counterwise(self, steps, hold):
         StepCounter = self.StepCount - 1
         while steps > 0:
             for pin in range(0, 4):
@@ -77,7 +78,8 @@ class Stepper:
 
             time.sleep(self.WaitTime)
             steps -= 1
-        self.reset_pins()
+        if hold != True:
+            self.reset_pins()
 
     def reset_pins(self):
         for pin in self.StepPins:
