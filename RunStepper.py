@@ -28,6 +28,7 @@ try:
         memory_new_steps = memory * revolution / 100
 
         print cpu_new_steps
+        print memory_new_steps
 
         if cpu_new_steps >= cpusteps:
             cpuStepper.rotate_clockwise(cpu_new_steps - cpusteps, True)

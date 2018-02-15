@@ -26,31 +26,45 @@ signal.signal(signal.SIGINT, allLightsOff)
 while True:
     print 'hello'
     resp = requests.get('http://localhost:5000/app/teamcity/builds/buildType:(id:uds),branch:develop')
+    uat_resp = requests.get('http://localhost:5000/app/teamcity/builds/buildType:(id:uds),branch:develop')
 
     state = resp.text
+    uat_state = uat_resp.text
 
     # Red
     if(state == 'RED'):
         GPIO.output(10,False)
         GPIO.output(11,False)
         GPIO.output(9, True)
-        time.sleep(5)
-
-    # Red and amber
-    if (state == 'RED-YELLOW'):
-        GPIO.output(10, True)
-        time.sleep(5)
 
     # Green
     if (state == 'GREEN'):
         GPIO.output(9, False)
         GPIO.output(10, False)
         GPIO.output(11, True)
-        time.sleep(5)
 
     # Amber
     if (state == 'YELLOW'):
         GPIO.output(11, False)
         GPIO.output(9, False)
         GPIO.output(10, True)
-        time.sleep(5)
+
+    # Red
+    if(state == 'RED'):
+        GPIO.output(16,False)
+        GPIO.output(20,False)
+        GPIO.output(21, True)
+
+    # Green
+    if (state == 'GREEN'):
+        GPIO.output(16, False)
+        GPIO.output(20, False)
+        GPIO.output(21, True)
+
+    # Amber
+    if (state == 'YELLOW'):
+        GPIO.output(16, False)
+        GPIO.output(20, False)
+        GPIO.output(21, True)
+
+    time.sleep(5)
