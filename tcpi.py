@@ -16,14 +16,18 @@ GPIO.setup(21, GPIO.OUT)
 
 # Turn off all lights when user ends demo
 def allLightsOff(signal, frame):
+    lightsOff()
+    GPIO.cleanup()
+    sys.exit(0)
+
+
+def lightsOff():
     GPIO.output(9, False)
     GPIO.output(10, False)
     GPIO.output(11, False)
     GPIO.output(16, False)
     GPIO.output(20, False)
     GPIO.output(21, False)
-    GPIO.cleanup()
-    sys.exit(0)
 
 
 signal.signal(signal.SIGINT, allLightsOff)
@@ -37,13 +41,15 @@ while True:
     state = resp.text
     uat_state = uat_resp.text
 
+    lightsOff()
+
     print state
     print uat_state
 
     # Red
     if state == 'RED':
-        GPIO.output(10,False)
-        GPIO.output(11,False)
+        GPIO.output(10, False)
+        GPIO.output(11, False)
         GPIO.output(9, True)
 
     # Green
@@ -57,5 +63,11 @@ while True:
         GPIO.output(11, False)
         GPIO.output(9, False)
         GPIO.output(10, True)
+
+    # Red
+    if uat_state == 'RED':
+        GPIO.output(21, False)
+        GPIO.output(20, False)
+        GPIO.output(16, True)
 
     time.sleep(5)
