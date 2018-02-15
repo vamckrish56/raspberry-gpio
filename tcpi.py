@@ -29,7 +29,7 @@ signal.signal(signal.SIGINT, allLightsOff)
 while True:
     print 'hello'
     resp = requests.get('http://localhost:5000/app/teamcity/builds/buildType:(id:uds),branch:develop')
-    uat_resp = requests.get('http://localhost:5000/app/teamcity/builds/buildType:(id:uds),branch:develop')
+    uat_resp = requests.get('http://localhost:5000/app/teamcity/builds/buildType:(id:uds),branch:uat')
 
     state = resp.text
     uat_state = uat_resp.text
