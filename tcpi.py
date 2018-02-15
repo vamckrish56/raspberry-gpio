@@ -25,7 +25,7 @@ def lightsOff():
     GPIO.output(9, False)
     GPIO.output(10, False)
     GPIO.output(11, False)
-    GPIO.output(16, False)
+    GPIO.output(16, False)  # GREEN
     GPIO.output(20, False)
     GPIO.output(21, False)
 
@@ -67,7 +67,15 @@ while True:
     # Red
     if uat_state == 'RED':
         GPIO.output(21, False)
+        GPIO.output(20, True)
+        GPIO.output(16, False)
+
+    # Green
+    if uat_state == 'GREEN':
+        GPIO.output(21, False)
         GPIO.output(20, False)
         GPIO.output(16, True)
+
+
 
     time.sleep(5)
