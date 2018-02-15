@@ -86,4 +86,5 @@ class Stepper:
             GPIO.output(pin, False)
 
     def cleanup(self):
+        self.reset_pins()
         GPIO.cleanup()
