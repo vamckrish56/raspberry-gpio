@@ -1,84 +1,31 @@
-#!/usr/bin/python
-# Import required libraries
-import sys
+import RPi.GPIO as gpio
 import time
-import RPi.GPIO as GPIO
-import signal
 
-# Use BCM GPIO references
-# instead of physical pin numbers
-GPIO.setmode(GPIO.BCM)
+PINS = [22,21,18,17]
+SEQA = [(22,),(21,),(18,),(17,)]
 
-# Define GPIO signals to use
-# Physical pins 11,15,16,18
-# GPIO17,GPIO22,GPIO23,GPIO24
-StepPins = [17, 22, 23, 24]
+DELAY = 0.05
 
-# Set all pins as output
-for pin in StepPins:
-    print "Setup pins"
-    GPIO.setup(pin, GPIO.OUT)
-    GPIO.output(pin, False)
+gpio.setmode(gpio.BCM)
+for pin in PINS:
+    gpio.setup(pin, gpio.OUT)
 
 
-# Turn off all lights when user ends demo
-def allPinsOff(signal, frame):
-    for pin in StepPins:
-        print "Setup pins"
-        GPIO.setup(pin, GPIO.OUT)
-        GPIO.output(pin, False)
-        GPIO.cleanup()
-    sys.exit(0)
+def stepper(sequence, pins):
+    for step in sequence:
+        for pin in pins:
+            if pin in step:
+                gpio.output(pin, gpio.HIGH)
+            else:
+                gpio.output(pin, gpio.LOW)
+        time.sleep(DELAY)
 
 
-signal.signal(signal.SIGINT, allPinsOff)
-
-# Define advanced sequence
-# as shown in manufacturers datasheet
-Seq = [[1, 0, 0, 1],
-       [1, 0, 0, 0],
-       [1, 1, 0, 0],
-       [0, 1, 0, 0],
-       [0, 1, 1, 0],
-       [0, 0, 1, 0],
-       [0, 0, 1, 1],
-       [0, 0, 0, 1]]
-
-StepCount = len(Seq)
-StepDir = 1  # Set to 1 or 2 for clockwise
-# Set to -1 or -2 for anti-clockwise
-
-# Read wait time from command line
-if len(sys.argv) > 1:
-    WaitTime = int(sys.argv[1]) / float(1000)
-else:
-    WaitTime = 10 / float(1000)
-
-# Initialise variables
-StepCounter = 0
-
-# Start main loop
-while True:
-
-    print StepCounter,
-    print Seq[StepCounter]
-
-    for pin in range(0, 4):
-        xpin = StepPins[pin]  # Get GPIO
-        if Seq[StepCounter][pin] != 0:
-            print " Enable GPIO %i" % (xpin)
-            GPIO.output(xpin, True)
-        else:
-            GPIO.output(xpin, False)
-
-    StepCounter += StepDir
-
-    # If we reach the end of the sequence
-    # start again
-    if (StepCounter >= StepCount):
-        StepCounter = 0
-    if (StepCounter < 0):
-        StepCounter = StepCount + StepDir
-
-    # Wait before moving on
-    time.sleep(1)
+try:
+    while True:
+        for _ in range(512):
+            stepper(SEQA, PINS)
+        for _ in range(512):
+            stepper(SEQA[::-1], PINS)
+except KeyboardInterrupt:
+    gpio.cleanup()
