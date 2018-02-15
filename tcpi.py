@@ -19,6 +19,9 @@ def allLightsOff(signal, frame):
     GPIO.output(9, False)
     GPIO.output(10, False)
     GPIO.output(11, False)
+    GPIO.output(16, False)
+    GPIO.output(20, False)
+    GPIO.output(21, False)
     GPIO.cleanup()
     sys.exit(0)
 
@@ -53,19 +56,19 @@ while True:
         GPIO.output(10, True)
 
     # Red
-    if(state == 'RED'):
+    if(uat_state == 'RED'):
         GPIO.output(16,False)
         GPIO.output(20,False)
         GPIO.output(21, True)
 
     # Green
-    if (state == 'GREEN'):
+    if (uat_state == 'GREEN'):
         GPIO.output(16, False)
         GPIO.output(20, False)
         GPIO.output(21, True)
 
     # Amber
-    if (state == 'YELLOW'):
+    if (uat_state == 'YELLOW'):
         GPIO.output(16, False)
         GPIO.output(20, False)
         GPIO.output(21, True)
