@@ -16,11 +16,11 @@ try:
         cpureq = requests.get('http://localhost:5000/app/teamcity/builds/buildType:(id:cpumotor),branch:develop')
         memoryreq = requests.get('http://localhost:5000/app/teamcity/builds/buildType:(id:memorymotor),branch:develop')
 
-        cpu = cpureq.text
-        memory = memoryreq.text
+        cpu = int(cpureq.text)
+        memory = int(memoryreq.text)
+        print cpu
 
         new_steps = (cpu * revolution)/100
-        print cpu
         print new_steps
 
         if new_steps >= steps:
