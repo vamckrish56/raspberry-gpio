@@ -9,6 +9,9 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(9, GPIO.OUT)
 GPIO.setup(10, GPIO.OUT)
 GPIO.setup(11, GPIO.OUT)
+GPIO.setup(16, GPIO.OUT)
+GPIO.setup(20, GPIO.OUT)
+GPIO.setup(21, GPIO.OUT)
 
 
 # Turn off all lights when user ends demo
