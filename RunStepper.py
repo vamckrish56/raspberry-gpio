@@ -2,11 +2,14 @@ from Stepper import Stepper
 import time,requests
 
 # initialize GPIO17,GPIO22,GPI23,GPI24
-stepper = Stepper(17, 22, 23, 24)
+cpuStepper = Stepper(17, 22, 23, 24)
+memoryStepper = Stepper(6, 13, 19, 26)
 # Total number of steps in one revolution = 3200
 revolution = int(3200)
-steps = int(0)
-new_steps = int(0)
+cpusteps = int(0)
+cpu_new_steps = int(0)
+memorysteps = int(0)
+memory_new_steps = int(0)
 waitDelay = int(10)
 hold = int(5)
 
@@ -19,17 +22,29 @@ try:
         cpu = int(cpureq.text)
         memory = int(memoryreq.text)
         print cpu
-        new_steps = cpu*revolution/100
-        print new_steps
+        print memory
 
-        if new_steps >= steps:
-            stepper.rotate_clockwise(new_steps-steps,True)
-            time.sleep(waitDelay)
+        cpu_new_steps = cpu * revolution / 100
+        memory_new_steps = cpu * revolution / 100
+
+        print cpu_new_steps
+
+        if cpu_new_steps >= cpusteps:
+            cpuStepper.rotate_clockwise(cpu_new_steps - cpusteps, True)
         else:
-            stepper.rotate_counterwise(steps-new_steps,True)
-            time.sleep(waitDelay)
-        steps = new_steps
+            cpuStepper.rotate_counterwise(cpusteps - cpu_new_steps, True)
+
+        if memory_new_steps >= memorysteps:
+            memoryStepper.rotate_clockwise(memory_new_steps - memorysteps, True)
+        else:
+            memoryStepper.rotate_counterwise(memorysteps - memory_new_steps, True)
+
+        time.sleep(waitDelay)
+        cpusteps = cpu_new_steps
+        memorysteps = memory_new_steps
 # finally reset speedometer to 0 and cleanup
 except KeyboardInterrupt:
-    stepper.rotate_counterwise(new_steps,True)
-    stepper.cleanup()
+    cpuStepper.rotate_counterwise(cpu_new_steps, True)
+    memoryStepper.rotate_counterwise(memory_new_steps,True)
+    cpuStepper.cleanup()
+    memoryStepper.cleanup()
