@@ -6,7 +6,7 @@ stepper = Stepper(17, 22, 23, 24)
 # Total number of steps in one revolution = 3200
 revolution = int(3200)
 steps = int(0)
-
+new_steps = int(0)
 waitDelay = int(10)
 hold = int(5)
 
@@ -29,5 +29,7 @@ try:
             stepper.rotate_counterwise(steps-new_steps,True)
             time.sleep(waitDelay)
         steps = new_steps
+# finally reset speedometer to 0 and cleanup
 except KeyboardInterrupt:
+    stepper.rotate_counterwise(new_steps,True)
     stepper.cleanup()
