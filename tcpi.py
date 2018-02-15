@@ -58,22 +58,4 @@ while True:
         GPIO.output(9, False)
         GPIO.output(10, True)
 
-    # Red
-    if uat_state == 'RED':
-        GPIO.output(16,False)
-        GPIO.output(20,False)
-        GPIO.output(21, True)
-
-    # Green
-    if uat_state == 'GREEN':
-        GPIO.output(16, False)
-        GPIO.output(20, False)
-        GPIO.output(21, True)
-
-    # Amber
-    if uat_state == 'YELLOW':
-        GPIO.output(16, False)
-        GPIO.output(20, False)
-        GPIO.output(21, True)
-
     time.sleep(5)
