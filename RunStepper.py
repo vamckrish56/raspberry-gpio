@@ -25,7 +25,7 @@ try:
         print memory
 
         cpu_new_steps = cpu * revolution / 100
-        memory_new_steps = cpu * revolution / 100
+        memory_new_steps = memory * revolution / 100
 
         print cpu_new_steps
 
