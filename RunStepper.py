@@ -4,11 +4,11 @@ import time,requests
 # initialize GPIO17,GPIO22,GPI23,GPI24
 stepper = Stepper(17, 22, 23, 24)
 # Total number of steps in one revolution = 3200
-revolution = 3200
-steps = 0
+revolution = int(3200)
+steps = int(0)
 
-waitDelay = 10
-hold = 5
+waitDelay = int(10)
+hold = int(5)
 
 try:
     while True:
@@ -19,8 +19,7 @@ try:
         cpu = int(cpureq.text)
         memory = int(memoryreq.text)
         print cpu
-
-        new_steps = (cpu * revolution)/100
+        new_steps = cpu*revolution/100
         print new_steps
 
         if new_steps >= steps:
