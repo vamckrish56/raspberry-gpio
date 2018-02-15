@@ -1,8 +1,8 @@
 import RPi.GPIO as gpio
 import time
 
-PINS = [22,21,18,17]
-SEQA = [(22,),(21,),(18,),(17,)]
+PINS = [17, 22, 23, 24]
+SEQA = [(17,),(22,),(23,),(24,)]
 
 DELAY = 0.05
 
